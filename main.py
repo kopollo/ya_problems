@@ -8,13 +8,15 @@ from PyQt5.QtWidgets import (
     QApplication, QWidget,
 )
 
+from main_window import Ui_Form
 
-class CircleGenerator(QWidget):
+
+class CircleGenerator(QWidget, Ui_Form):
     SCREEN_SIZE = (500, 500)
 
     def __init__(self):
         super().__init__()
-        uic.loadUi('main_window.ui', self)
+        self.setupUi(self)
         self.center = (250, 250)
         self.setGeometry(300, 300, *CircleGenerator.SCREEN_SIZE)
         self.setWindowTitle('Git и желтые окружности')
@@ -40,9 +42,10 @@ class CircleGenerator(QWidget):
         return randint(100, 255)
 
     def draw_flag(self, qp):
-        qp.setPen(QPen(Qt.yellow, 8))
+        pen = QPen(QColor(*self.generate_rand_color()), 9)
+        qp.setPen(pen)
         diametr = self.generate_rand_diametr()
-        qp.drawEllipse(150,150, diametr, diametr)
+        qp.drawEllipse(150, 150, diametr, diametr)
 
 
 if __name__ == '__main__':
